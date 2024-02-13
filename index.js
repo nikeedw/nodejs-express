@@ -10,10 +10,14 @@ const app = express();
 app.use(express.json());
 
 app.post('/', async (req, res) => {
-	const { author, title, content, picture } = req.body;
-	const post = await Post.create({author, title, content, picture});
-	console.log(req.body);
-	res.json(post);
+	try{
+		const { author, title, content, picture } = req.body;
+		const post = await Post.create({author, title, content, picture});
+		console.log(req.body);
+		res.json(post);
+	} catch(e) {
+		res.status(500).json(e);
+	}
 })
 
 async function startApp() {
